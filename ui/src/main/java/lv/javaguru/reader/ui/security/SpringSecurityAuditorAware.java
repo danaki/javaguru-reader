@@ -1,6 +1,6 @@
-package lv.javaguru.reader.security;
+package lv.javaguru.reader.ui.security;
 
-import lv.javaguru.reader.config.Constants;
+import lv.javaguru.reader.ui.config.Constants;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
 

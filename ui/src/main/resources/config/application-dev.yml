@@ -53,8 +53,8 @@ hotReload:
     enabled: true
     package:
       project: lv.javaguru.reader
-      domain: lv.javaguru.reader.domain
-      restdto: lv.javaguru.reader.web.rest.dto
+      domain: lv.javaguru.reader.ui.domain
+      restdto: lv.javaguru.reader.ui.web.rest.dto
     liquibase:
       defaultCatalogName: 
       defaultSchema: public

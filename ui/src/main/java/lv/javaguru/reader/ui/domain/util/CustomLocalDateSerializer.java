@@ -1,4 +1,4 @@
-package lv.javaguru.reader.domain.util;
+package lv.javaguru.reader.ui.domain.util;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;

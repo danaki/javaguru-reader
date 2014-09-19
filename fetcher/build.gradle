@@ -1,0 +1,104 @@
+buildscript {
+    repositories {
+        maven { url 'http://repo.spring.io/libs-snapshot' }
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:1.1.5.RELEASE')
+        classpath('be.filipblondeel.gradle:gradle-gulp-plugin:0.1')
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'spring-boot'
+apply plugin: 'idea'
+
+bootRepackage {
+  mainClass = 'lv.javaguru.reader.fetcher.Application'
+}
+
+springBoot {
+  mainClass = 'lv.javaguru.reader.fetcher.Application'
+}
+
+//apply from: 'yeoman.gradle'
+
+//if (profile == 'prod')
+//    apply from: 'profile_prod.gradle'
+//else
+//    apply from: 'profile_dev.gradle'
+
+group = 'lv.javaguru.reader.fetcher'
+version = '0.1-SNAPSHOT'
+
+description = ''
+
+
+jar {
+    baseName = 'javaguru-reader-fetcher'
+    version =  '0.1-SNAPSHOT'
+}
+
+task copyLiquibase(dependsOn: classes, type: Copy) {
+    from {
+        configurations.compile.findAll {
+            it.name == "liquibase-slf4j-${liquibase_slf4j_version}.jar"
+        }.collect {
+            zipTree(it)
+        }
+    }
+    from {
+        configurations.compile.findAll {
+            it.name == "liquibase-core-${liquibase_core_version}.jar"
+        }.collect {
+            zipTree(it)
+        }
+    }
+    into sourceSets.main.output.classesDir
+    include 'liquibase/**/*.class'
+}
+
+jar.dependsOn copyLiquibase
+
+
+repositories {
+
+    maven { url 'http://repo.spring.io/milestone' }
+    maven { url 'http://repo.spring.io/snapshot' }
+    maven { url 'https://repository.jboss.org/nexus/content/repositories/releases' }
+    maven { url 'https://oss.sonatype.org/content/repositories/releases' }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url 'http://repo.maven.apache.org/maven2' }
+}
+
+dependencies {
+    compile project(":common")
+
+    compile group: 'rome', name: 'rome', version: '1.0'
+
+    compile group: 'commons-lang', name: 'commons-lang', version: commons_lang_version
+    compile group: 'commons-io', name: 'commons-io', version: commons_io_version
+
+    compile group: 'org.springframework.boot', name: 'spring-boot-actuator', version: spring_boot_version
+    compile group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: spring_boot_version
+    compile group: 'org.springframework.boot', name: 'spring-boot-loader-tools', version: spring_boot_version
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-logging', version: spring_boot_version
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: spring_boot_version
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: spring_boot_version
+    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: spring_boot_version
+    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version: spring_boot_version
+    //compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: spring_boot_version) {
+    //    exclude module: 'spring_boot-starter-tomcat'
+    //}
+    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-jetty', version: spring_boot_version
+    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: spring_boot_version
+    compile(group: 'org.springframework', name: 'spring-context-support', version: spring_context_support_version) {
+        exclude(module: 'quartz')
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}

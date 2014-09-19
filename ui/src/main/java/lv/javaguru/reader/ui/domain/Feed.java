@@ -1,9 +1,9 @@
-package lv.javaguru.reader.domain;
+package lv.javaguru.reader.ui.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.joda.deser.LocalDateDeserializer;
-import lv.javaguru.reader.domain.util.CustomLocalDateSerializer;
+import lv.javaguru.reader.ui.domain.util.CustomLocalDateSerializer;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;

@@ -1,6 +1,6 @@
-package lv.javaguru.reader.config;
+package lv.javaguru.reader.ui.config;
 
-import lv.javaguru.reader.config.locale.AngularCookieLocaleResolver;
+import lv.javaguru.reader.ui.config.locale.AngularCookieLocaleResolver;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.MessageSource;

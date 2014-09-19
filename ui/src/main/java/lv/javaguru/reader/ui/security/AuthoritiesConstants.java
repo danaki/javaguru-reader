@@ -1,4 +1,4 @@
-package lv.javaguru.reader.security;
+package lv.javaguru.reader.ui.security;
 
 /**
  * Constants for Spring Security authorities.

@@ -1,4 +1,4 @@
-package lv.javaguru.reader.config;
+package lv.javaguru.reader.common.config;
 
 /**
  * Application constants.

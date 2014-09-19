@@ -1,8 +1,8 @@
-package lv.javaguru.reader.web;
+package lv.javaguru.reader.ui.web;
 
 import com.codahale.metrics.annotation.Timed;
-import lv.javaguru.reader.domain.Feed;
-import lv.javaguru.reader.repository.FeedRepository;
+import lv.javaguru.reader.ui.domain.Feed;
+import lv.javaguru.reader.ui.repository.FeedRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

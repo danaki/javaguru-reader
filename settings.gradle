@@ -1,4 +1,4 @@
 rootProject.name = 'Javaguru_Reader'
 
-include 'ui'
+include 'common', 'ui', 'fetcher'
 

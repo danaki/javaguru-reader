@@ -18,11 +18,11 @@ apply plugin: 'spring-boot'
 apply plugin: 'idea'
 
 bootRepackage {
-  mainClass = 'lv.javaguru.reader.Application'
+  mainClass = 'lv.javaguru.reader.ui.Application'
 }
 
 springBoot {
-  mainClass = 'lv.javaguru.reader.Application'
+  mainClass = 'lv.javaguru.reader.ui.Application'
 }
 
 //apply from: 'yeoman.gradle'
@@ -76,6 +76,8 @@ repositories {
 }
 
 dependencies {
+    compile project(":common")
+
     compile group: 'com.codahale.metrics', name: 'metrics-core', version: codahale_metrics_version
     compile group: 'com.codahale.metrics', name: 'metrics-ehcache', version: codahale_metrics_version
     compile group: 'com.codahale.metrics', name: 'metrics-graphite', version: codahale_metrics_version

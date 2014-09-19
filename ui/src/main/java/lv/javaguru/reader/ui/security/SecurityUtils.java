@@ -1,4 +1,4 @@
-package lv.javaguru.reader.security;
+package lv.javaguru.reader.ui.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

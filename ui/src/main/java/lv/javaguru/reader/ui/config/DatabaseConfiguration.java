@@ -1,4 +1,4 @@
-package lv.javaguru.reader.config;
+package lv.javaguru.reader.ui.config;
 
 import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 import com.zaxxer.hikari.HikariConfig;
@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
-@EnableJpaRepositories("lv.javaguru.reader.repository")
+@EnableJpaRepositories("lv.javaguru.reader.ui.repository")
 @EnableTransactionManagement
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 public class DatabaseConfiguration implements EnvironmentAware {
@@ -66,7 +66,7 @@ public class DatabaseConfiguration implements EnvironmentAware {
     @Bean(name = {"org.springframework.boot.autoconfigure.AutoConfigurationUtils.basePackages"})
     public List<String> getBasePackages() {
         List<String> basePackages = new ArrayList<>();
-        basePackages.add("lv.javaguru.reader.domain");
+        basePackages.add("lv.javaguru.reader.ui.domain");
         return basePackages;
     }
 
