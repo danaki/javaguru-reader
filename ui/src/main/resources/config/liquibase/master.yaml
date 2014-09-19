@@ -7,4 +7,7 @@ databaseChangeLog:
       name: now()
       value: current_timestamp
       dbms: postresql
+  - include:
+      file: classpath:config/liquibase/changelog/db-changelog-002.xml
+      relativeToChangelogFile: false
       
