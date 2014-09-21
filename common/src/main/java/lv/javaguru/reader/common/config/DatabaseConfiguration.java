@@ -1,4 +1,4 @@
-package lv.javaguru.reader.ui.config;
+package lv.javaguru.reader.common.config;
 
 import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 import com.zaxxer.hikari.HikariConfig;
@@ -6,25 +6,31 @@ import com.zaxxer.hikari.HikariDataSource;
 import liquibase.integration.spring.SpringLiquibase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.Arrays;
 import java.util.List;
 
 @Configuration
-@EnableJpaRepositories("lv.javaguru.reader.ui.repository")
+@EnableJpaRepositories("lv.javaguru.reader.common.repository")
 @EnableTransactionManagement
-@EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
+//@EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 public class DatabaseConfiguration implements EnvironmentAware {
 
     private final Logger log = LoggerFactory.getLogger(DatabaseConfiguration.class);
@@ -66,8 +72,28 @@ public class DatabaseConfiguration implements EnvironmentAware {
     @Bean(name = {"org.springframework.boot.autoconfigure.AutoConfigurationUtils.basePackages"})
     public List<String> getBasePackages() {
         List<String> basePackages = new ArrayList<>();
-        basePackages.add("lv.javaguru.reader.ui.domain");
+        basePackages.add("lv.javaguru.reader.common.domain");
         return basePackages;
+    }
+
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        vendorAdapter.setGenerateDdl(true);
+
+        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+        factory.setJpaVendorAdapter(vendorAdapter);
+        factory.setPackagesToScan(new String[] { "lv.javaguru.reader.common.domain" });
+        factory.setDataSource(dataSource());
+
+        propertyResolver = new RelaxedPropertyResolver(environment, "spring.jpa.");
+        Properties properties = new Properties();
+        properties.putAll(propertyResolver.getSubProperties("properties."));
+        factory.setJpaProperties(properties);
+
+        factory.afterPropertiesSet();
+
+        return factory;
     }
 
     @Bean
@@ -84,5 +110,18 @@ public class DatabaseConfiguration implements EnvironmentAware {
     public Hibernate4Module hibernate4Module() {
         return new Hibernate4Module();
     }
+
+//   @Bean
+//   public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+//      LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+//      em.setDataSource(dataSource());
+//      em.setPackagesToScan(new String[] { "lv.javaguru.reader.common.domain" });
+//
+////      JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+////      em.setJpaVendorAdapter(vendorAdapter);
+////      em.setJpaProperties(additionalProperties());
+//
+//      return em;
+//   }
 }
 

@@ -1,6 +1,6 @@
-package lv.javaguru.reader.ui.repository;
+package lv.javaguru.reader.common.repository;
 
-import lv.javaguru.reader.ui.domain.Feed;
+import lv.javaguru.reader.common.domain.Feed;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

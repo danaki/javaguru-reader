@@ -14,7 +14,7 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Arrays;
 
-@ComponentScan
+@ComponentScan({"lv.javaguru.reader.common.config", "lv.javaguru.reader.ui.config"})
 @EnableAutoConfiguration
 public class Application {
 
