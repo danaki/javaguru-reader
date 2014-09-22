@@ -2,3 +2,5 @@ rootProject.name = 'Javaguru_Reader'
 
 include 'common', 'ui', 'fetcher'
 
+include 'datastore'
+
