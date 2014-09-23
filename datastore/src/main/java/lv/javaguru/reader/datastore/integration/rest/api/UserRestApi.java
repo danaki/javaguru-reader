@@ -7,10 +7,6 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-/**
- * Project Javaguru_Reader.
- */
-
 @RepositoryRestResource(collectionResourceRel = "users", path = "users")
 public interface UserRestApi extends PagingAndSortingRepository <User, Long> {
 
