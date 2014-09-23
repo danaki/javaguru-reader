@@ -1,6 +1,6 @@
-.*\.iml
-.*\.ipr
-.*\.iws
+*.iml
+*.ipr
+*.iws
 \.idea\/*
 \.DS_Store
 build\/
