@@ -11,9 +11,7 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'maven'
 apply plugin: 'spring-boot'
-apply plugin: 'idea'
 
 bootRepackage {
   mainClass = 'lv.javaguru.reader.fetcher.Application'
@@ -23,45 +21,13 @@ springBoot {
   mainClass = 'lv.javaguru.reader.fetcher.Application'
 }
 
-//apply from: 'yeoman.gradle'
-
-//if (profile == 'prod')
-//    apply from: 'profile_prod.gradle'
-//else
-//    apply from: 'profile_dev.gradle'
-
 group = 'lv.javaguru.reader.fetcher'
 version = '0.1-SNAPSHOT'
-
-description = ''
-
 
 jar {
     baseName = 'javaguru-reader-fetcher'
     version =  '0.1-SNAPSHOT'
 }
-
-task copyLiquibase(dependsOn: classes, type: Copy) {
-    from {
-        configurations.compile.findAll {
-            it.name == "liquibase-slf4j-${liquibase_slf4j_version}.jar"
-        }.collect {
-            zipTree(it)
-        }
-    }
-    from {
-        configurations.compile.findAll {
-            it.name == "liquibase-core-${liquibase_core_version}.jar"
-        }.collect {
-            zipTree(it)
-        }
-    }
-    into sourceSets.main.output.classesDir
-    include 'liquibase/**/*.class'
-}
-
-jar.dependsOn copyLiquibase
-
 
 repositories {
 
@@ -87,18 +53,7 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-logging', version: spring_boot_version
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: spring_boot_version
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: spring_boot_version
-    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: spring_boot_version
-    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version: spring_boot_version
-    //compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: spring_boot_version) {
-    //    exclude module: 'spring_boot-starter-tomcat'
-    //}
-    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-jetty', version: spring_boot_version
-    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: spring_boot_version
     compile(group: 'org.springframework', name: 'spring-context-support', version: spring_context_support_version) {
         exclude(module: 'quartz')
     }
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
 }
