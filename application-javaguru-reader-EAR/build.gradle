@@ -6,7 +6,7 @@ repositories { mavenCentral() }
 dependencies {
     deploy project(':datastore')
     deploy project(':fetcher')
-    deploy project(':ui')
+    deploy project(path: ':ui', configuration: 'archives')
 
 //    earlib group: 'log4j', name: 'log4j', version: '1.2.15', ext: 'jar'
 }
