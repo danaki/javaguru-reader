@@ -40,8 +40,6 @@ repositories {
 }
 
 dependencies {
-    compile project(":common")
-
     compile group: 'rome', name: 'rome', version: '1.0'
 
     compile group: 'commons-lang', name: 'commons-lang', version: commons_lang_version
