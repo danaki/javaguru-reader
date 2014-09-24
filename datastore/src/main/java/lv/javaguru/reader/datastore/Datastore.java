@@ -13,7 +13,7 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguratio
 
 @Configuration
 @EnableAutoConfiguration
-@EnableJpaRepositories
+@EnableJpaRepositories(basePackages = "lv.javaguru.reader.datastore.repositories")
 @Import(RepositoryRestMvcConfiguration.class)
 public class Datastore {
 

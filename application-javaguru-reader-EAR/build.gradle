@@ -1,0 +1,30 @@
+apply plugin: 'java'
+apply plugin: 'ear'
+
+repositories { mavenCentral() }
+
+dependencies {
+    deploy project(':datastore')
+    deploy project(':fetcher')
+    deploy project(':ui')
+
+//    earlib group: 'log4j', name: 'log4j', version: '1.2.15', ext: 'jar'
+}
+
+ear {
+    appDirName 'application'
+    libDirName 'APP-INF/lib'
+    deploymentDescriptor {
+        fileName = "application.xml"  // same as the default value
+        version = "6"  // same as the default value
+        applicationName = "application-javaguru-reader"
+        initializeInOrder = true
+//        module("my.jar", "java")  // won't deploy as my.jar isn't deploy dependency
+//        webModule("my.war", "/")  // won't deploy as my.war isn't deploy dependency
+//        securityRole "admin"
+//        securityRole "superadmin"
+//        withXml { provider -> // add a custom node to the XML
+//            provider.asNode().appendNode("data-source", "my/data/source")
+//        }
+    }
+}

@@ -4,3 +4,5 @@ include 'common', 'ui', 'fetcher'
 
 include 'datastore'
 
+include 'application-javaguru-reader-EAR'
+

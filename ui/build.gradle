@@ -12,10 +12,8 @@ buildscript {
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'maven'
+apply plugin: 'war'
 apply plugin: 'spring-boot'
-apply plugin: 'idea'
 
 bootRepackage {
   mainClass = 'lv.javaguru.reader.ui.Application'
@@ -38,8 +36,8 @@ version = '0.1-SNAPSHOT'
 description = ''
 
 
-jar {
-    baseName = 'javaguru-reader'
+war {
+    baseName = 'javaguru-reader-ui'
     version =  '0.1-SNAPSHOT'
 }
 
