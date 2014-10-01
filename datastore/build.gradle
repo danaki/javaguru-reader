@@ -1,11 +1,13 @@
 buildscript {
     repositories {
         maven { url "http://repo.spring.io/libs-release" }
+        maven { url "http://repo.spring.io/snapshot" }
+        maven { url "http://repo.spring.io/milestone" }
         mavenLocal()
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.6.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.0.BUILD-SNAPSHOT")
     }
 }
 
@@ -42,6 +44,8 @@ repositories {
     mavenCentral()
     maven { url "http://repo.spring.io/libs-release" }
     maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
+    maven { url "http://repo.spring.io/snapshot" }
+    maven { url "http://repo.spring.io/milestone" }
 }
 
 dependencies {
@@ -49,7 +53,8 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-rest")
     compile("com.h2database:h2")
 
-    compile("com.squareup.retrofit:retrofit:1.6.0")
+    compile("org.springframework:spring-jms")
+    compile("org.apache.activemq:activemq-broker")
 
     testCompile group: 'junit', name: 'junit', version: '4.11'
     testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'

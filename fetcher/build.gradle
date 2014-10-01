@@ -1,25 +1,22 @@
 buildscript {
     repositories {
-        maven { url 'http://repo.spring.io/libs-snapshot' }
+        maven { url "http://repo.spring.io/libs-release" }
+        maven { url "http://repo.spring.io/snapshot" }
+        maven { url "http://repo.spring.io/milestone" }
         mavenLocal()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath('org.springframework.boot:spring-boot-gradle-plugin:1.1.5.RELEASE')
-        classpath('be.filipblondeel.gradle:gradle-gulp-plugin:0.1')
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.0.BUILD-SNAPSHOT")
     }
 }
 
 apply plugin: 'java'
+apply plugin: 'idea'
+//apply plugin: 'application'
 apply plugin: 'spring-boot'
 
-bootRepackage {
-  mainClass = 'lv.javaguru.reader.fetcher.Application'
-}
-
-springBoot {
-  mainClass = 'lv.javaguru.reader.fetcher.Application'
-}
+mainClassName = 'lv.javaguru.reader.fetcher.Fetcher'
 
 group = 'lv.javaguru.reader.fetcher'
 version = '0.1-SNAPSHOT'
@@ -30,28 +27,23 @@ jar {
 }
 
 repositories {
-
-    maven { url 'http://repo.spring.io/milestone' }
-    maven { url 'http://repo.spring.io/snapshot' }
-    maven { url 'https://repository.jboss.org/nexus/content/repositories/releases' }
-    maven { url 'https://oss.sonatype.org/content/repositories/releases' }
-    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-    maven { url 'http://repo.maven.apache.org/maven2' }
+    mavenLocal()
+    mavenCentral()
+    maven { url "http://repo.spring.io/libs-release" }
+    maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
+    maven { url "http://repo.spring.io/snapshot" }
+    maven { url "http://repo.spring.io/milestone" }
 }
 
 dependencies {
-    compile group: 'rome', name: 'rome', version: '1.0'
+//    compile group: 'rome', name: 'rome', version: '1.0'
 
-    compile group: 'commons-lang', name: 'commons-lang', version: commons_lang_version
-    compile group: 'commons-io', name: 'commons-io', version: commons_io_version
+//    compile group: 'commons-lang', name: 'commons-lang', version: commons_lang_version
+//    compile group: 'commons-io', name: 'commons-io', version: commons_io_version
 
-    compile group: 'org.springframework.boot', name: 'spring-boot-actuator', version: spring_boot_version
-    compile group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: spring_boot_version
-    compile group: 'org.springframework.boot', name: 'spring-boot-loader-tools', version: spring_boot_version
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-logging', version: spring_boot_version
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: spring_boot_version
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: spring_boot_version
-    compile(group: 'org.springframework', name: 'spring-context-support', version: spring_context_support_version) {
-        exclude(module: 'quartz')
-    }
+    compile("org.springframework.boot:spring-boot-starter")
+
+//    compile('org.slf4j:slf4j-simple:1.6.1')
+    compile('org.springframework:spring-jms')
+    compile('org.apache.activemq:activemq-broker')
 }
