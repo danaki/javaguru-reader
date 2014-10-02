@@ -2,6 +2,7 @@ package lv.javaguru.reader.datastore;
 
 import lv.javaguru.reader.datastore.domain.Feed;
 import lv.javaguru.reader.datastore.integration.rest.api.FeedResource;
+import lv.javaguru.reader.datastore.repositories.EntryRepository;
 import lv.javaguru.reader.datastore.repositories.FeedRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,6 +42,9 @@ public class FeedResourceTest {
     private static final Long DEFAULT_ID = new Long(1L);
 
     @Autowired
+    private EntryRepository entryRepository;
+
+    @Autowired
     private FeedRepository feedRepository;
 
     private MockMvc restFeedMockMvc;
@@ -59,6 +63,9 @@ public class FeedResourceTest {
         feed.setId(DEFAULT_ID);
 //        feed.setEntriesUpdatedAt(DEFAULT_SAMPLE_DATE_ATTR);
         feed.setUrl("http://example.org/feed");
+
+        entryRepository.deleteAll();
+        feedRepository.deleteAll();
         feedRepository.save(feed);
     }
 

@@ -1,0 +1,14 @@
+spring:
+  profiles: test
+
+  datasource:
+    driverClassName: org.hsqldb.jdbc.JDBCDriver
+    url: jdbc:hsqldb:mem:reader
+    username: sa
+    password:
+
+  jpa:
+    open-in-view: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update

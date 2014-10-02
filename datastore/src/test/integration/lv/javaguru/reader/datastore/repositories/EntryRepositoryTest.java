@@ -41,6 +41,9 @@ public class EntryRepositoryTest {
 
     @Before
     public void setUp() throws Exception {
+        feedRepository.deleteAll();
+        entryRepository.deleteAll();
+
         feedRepository.save(feeds);
         entryRepository.save(entries);
     }

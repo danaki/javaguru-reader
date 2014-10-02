@@ -1,21 +1,7 @@
 spring:
   application:
     name: JavaguruReaderDatastore
-  profiles:
-    active: development
+
   main:
     web-environment: true
-    show_banner: false
 
----
-
-spring:
-  profiles: development
-  activemq:
-    brokerURL: tcp://localhost:61616
-    inMemory: false
-
----
-
-spring:
-  profiles: test

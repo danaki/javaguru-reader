@@ -77,8 +77,8 @@ public class EntryResourceTest {
         entry2.setTitle("Second article");
         entry2.setUrl("http://www.example.org/second-article");
 
-        feedRepository.deleteAll();
         entryRepository.deleteAll();
+        feedRepository.deleteAll();
 
         feedRepository.save(feed1);
         entryRepository.save(Arrays.asList(entry1, entry2));

@@ -35,7 +35,8 @@ public class Feed implements Serializable {
     @Column(name = "title", length = 255)
     private String title;
 
-    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "feed_id")
     private Set<Entry> entries = new HashSet<Entry>();
 
     public Feed() {}

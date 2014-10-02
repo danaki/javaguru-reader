@@ -11,3 +11,5 @@ war {
 
 jar.enabled = false
 
+httpPort = 8888
+
