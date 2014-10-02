@@ -9,7 +9,7 @@ import java.util.List;
  * Project Javaguru_Reader.
  */
 //public class UserRepository {}
-public interface UserRepository extends CrudRepository<User, Long>{
+public interface UserRepository extends CrudRepository<User, Long> {
 
     List<User> findByLastName(String lastName);
 }

@@ -7,5 +7,6 @@ import org.springframework.data.repository.CrudRepository;
  * Project Javaguru_Reader.
  */
 //public class UserRepository {}
-public interface FeedRepository extends CrudRepository<Feed, Long>{
+public interface FeedRepository extends CrudRepository<Feed, Long> {
+    Feed findByUrl(String url);
 }

@@ -26,6 +26,12 @@ jar {
     version =  '0.1-SNAPSHOT'
 }
 
+run {
+    if ( project.hasProperty("appArgs") ) {
+        args Eval.me(appArgs)
+    }
+}
+
 repositories {
     mavenLocal()
     mavenCentral()
@@ -36,10 +42,10 @@ repositories {
 }
 
 dependencies {
-//    compile group: 'rome', name: 'rome', version: '1.0'
+    compile group: 'rome', name: 'rome', version: '1.0'
 
-//    compile group: 'commons-lang', name: 'commons-lang', version: commons_lang_version
-//    compile group: 'commons-io', name: 'commons-io', version: commons_io_version
+    compile group: 'commons-lang', name: 'commons-lang', version: commons_lang_version
+    compile group: 'commons-io', name: 'commons-io', version: commons_io_version
 
     compile("org.springframework.boot:spring-boot-starter")
 

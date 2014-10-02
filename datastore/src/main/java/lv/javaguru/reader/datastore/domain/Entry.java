@@ -41,6 +41,14 @@ public class Entry implements Serializable {
     @JoinColumn(name = "feed_id", nullable = false)
     private Feed feed;
 
+    public Entry() {}
+
+    public Entry(Feed feed, String url, String title) {
+        this.feed = feed;
+        this.url = url;
+        this.title = title;
+    }
+
     public Long getId() {
         return id;
     }

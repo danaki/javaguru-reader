@@ -31,8 +31,19 @@ public class Feed implements Serializable {
     @Column(name = "url", length = 255)
     private String url;
 
+    @Size(min = 1, max = 255)
+    @Column(name = "title", length = 255)
+    private String title;
+
     @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private Set<Entry> entries = new HashSet<Entry>();
+
+    public Feed() {}
+
+    public Feed(String url, String title) {
+        this.url = url;
+        this.title = title;
+    }
 
 //    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 //    @JsonDeserialize(using = LocalDateDeserializer.class)
@@ -54,6 +65,14 @@ public class Feed implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Set<Entry> getEntries() {

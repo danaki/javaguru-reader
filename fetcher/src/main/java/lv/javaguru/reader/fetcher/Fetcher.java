@@ -1,5 +1,8 @@
 package lv.javaguru.reader.fetcher;
 
+import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.io.SyndFeedInput;
+import com.sun.syndication.io.XmlReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,8 +18,10 @@ import org.springframework.util.FileSystemUtils;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
+import javax.jms.ObjectMessage;
 import javax.jms.Session;
 import java.io.File;
+import java.net.URL;
 
 
 @ComponentScan
@@ -97,27 +102,43 @@ public class Fetcher implements CommandLineRunner {
 //		return factory;
 //	}
 
+    public static void main(String[] args) {
+        SpringApplication.run(Fetcher.class, args);
+    }
+
     @Override
     public void run(String... args) throws Exception {
         // Clean out any ActiveMQ data from a previous run
         FileSystemUtils.deleteRecursively(new File("activemq-data"));
 
-        // Send a message
-        MessageCreator messageCreator = new MessageCreator() {
-            @Override
-            public Message createMessage(Session session) throws JMSException {
-                return session.createTextMessage("ping!");
-            }
-        };
+        final SyndFeed feed;
+
+        String url = args[0];
+        URL inputUrl = new URL(url);
+
+        SyndFeedInput input = new SyndFeedInput();
+        feed = input.build(new XmlReader(inputUrl));
+
+        System.out.println("Sending a new message.");
+        sendFeed(url, feed);
 
 //        JmsTemplate jmsTemplate = context.getBean(JmsTemplate.class);
 
 //        jmsTemplate.setDefaultDestinationName("myQueue");
-        System.out.println("Sending a new message.");
-        jmsTemplate.send("myQueue", messageCreator);
+
     }
 
-    public static void main(String[] args) {
-        SpringApplication.run(Fetcher.class, args);
+    private void sendFeed(String url, final SyndFeed feed)
+    {
+        MessageCreator messageCreator = new MessageCreator() {
+            @Override
+            public Message createMessage(Session session) throws JMSException {
+                ObjectMessage msg = session.createObjectMessage();
+                msg.setObject(new FeedDataMessage(url, feed));
+                return msg;
+            }
+        };
+
+        jmsTemplate.send("myQueue", messageCreator);
     }
 }
