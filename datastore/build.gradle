@@ -65,6 +65,7 @@ dependencies {
 
     compile("org.springframework:spring-jms")
     compile("org.apache.activemq:activemq-broker")
+    compile("com.voodoodyne.jackson.jsog:jackson-jsog:1.0.1")
 
     compile("mysql:mysql-connector-java")
 

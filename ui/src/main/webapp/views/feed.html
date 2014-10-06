@@ -1,0 +1,25 @@
+<div>
+
+    <h2>{{feed.title}}</h2>
+    <p>{{feed.url}}</p>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>URL</th>
+                    <th>Title</th>
+                    <th>Created At</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="entry in feed.entries">
+                    <td><a href="#/feeds/{{entry.feed.id}}">{{entry.feed.title}}</td>
+                    <td><a href="{{entry.url}}">{{entry.title}}</a></td>
+                    <td>{{entry.createdAt}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

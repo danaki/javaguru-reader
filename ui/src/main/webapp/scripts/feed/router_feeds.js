@@ -3,12 +3,12 @@
 javaguruReaderApp
     .config(function ($routeProvider, $httpProvider, $translateProvider, USER_ROLES) {
             $routeProvider
-                .when('/feeds/:id', {
-                    templateUrl: 'views/feed.html',
-                    controller: 'FeedController',
+                .when('/feeds', {
+                    templateUrl: 'views/feeds.html',
+                    controller: 'FeedsController',
                     resolve: {
-                        resolvedFeed: ['Feed', '$route', function (Feed, $route) {
-                            return Feed.get({id: $route.current.params.id});
+                        resolvedFeeds: ['Feed', function (Feed) {
+                            return Feed.query();
                         }]
                     },
                     access: {

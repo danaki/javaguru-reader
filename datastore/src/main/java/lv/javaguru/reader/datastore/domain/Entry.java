@@ -1,5 +1,8 @@
 package lv.javaguru.reader.datastore.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.voodoodyne.jackson.jsog.JSOGGenerator;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -16,6 +19,8 @@ import java.io.Serializable;
 @Entity
 //@Table(name = "T_ENTRY")
 //@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+@JsonIdentityInfo(generator=JSOGGenerator.class)
 public class Entry implements Serializable {
 
     @Id
@@ -37,8 +42,9 @@ public class Entry implements Serializable {
 //    @Column(name = "created_at", nullable = false)
 //    private LocalDate createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "feed_id", nullable = false)
+//    @JsonBackReference
     private Feed feed;
 
     public Entry() {}

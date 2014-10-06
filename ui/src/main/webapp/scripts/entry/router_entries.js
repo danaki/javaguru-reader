@@ -3,11 +3,11 @@
 javaguruReaderApp
     .config(function ($routeProvider, $httpProvider, $translateProvider, USER_ROLES) {
             $routeProvider
-                .when('/entry', {
-                    templateUrl: 'views/entrys.html',
-                    controller: 'EntryController',
-                    resolve:{
-                        resolvedEntry: ['Entry', function (Entry) {
+                .when('/entries', {
+                    templateUrl: 'views/entries.html',
+                    controller: 'EntriesController',
+                    resolve: {
+                        resolvedEntries: ['Entry', function (Entry) {
                             return Entry.query();
                         }]
                     },

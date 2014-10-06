@@ -1,8 +1,8 @@
 'use strict';
 
-javaguruReaderApp.factory('Feed', function ($resource) {
-        return $resource('app/rest/feeds/:id', {}, {
-            'query': { method: 'GET', isArray: true},
-            'get': { method: 'GET'}
-        });
+javaguruReaderApp.factory('Feed', ['$resource', 'REST_BASE', function ($resource, REST_BASE) {
+    return $resource(REST_BASE.url + '/feeds/:id', { id: '@id' }, {
+        'query': { method: 'GET', isArray: true, transformResponse: JSOG.parse },
+        'get': { method: 'GET', transformResponse: JSOG.parse }
     });
+}]);

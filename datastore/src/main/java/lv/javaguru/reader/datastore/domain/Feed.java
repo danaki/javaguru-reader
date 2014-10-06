@@ -7,6 +7,9 @@ package lv.javaguru.reader.datastore.domain;
 //import org.hibernate.annotations.Cache;
 //import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.voodoodyne.jackson.jsog.JSOGGenerator;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -21,6 +24,8 @@ import java.util.Set;
 @Entity
 //@Table(name = "T_FEED")
 //@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+@JsonIdentityInfo(generator=JSOGGenerator.class)
 public class Feed implements Serializable {
 
     @Id
@@ -37,6 +42,7 @@ public class Feed implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "feed_id")
+//    @JsonManagedReference
     private Set<Entry> entries = new HashSet<Entry>();
 
     public Feed() {}

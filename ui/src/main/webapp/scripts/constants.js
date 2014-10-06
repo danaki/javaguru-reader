@@ -2,6 +2,10 @@
 
 /* Constants */
 
+javaguruReaderApp.constant('REST_BASE', {
+    url: 'http://localhost\\:8080'
+});
+
 javaguruReaderApp.constant('USER_ROLES', {
         all: '*',
         admin: 'ROLE_ADMIN',

@@ -36,6 +36,19 @@ public class EntryResource {
     @Autowired
     private EntryRepository entryRepository;
 
+    @RequestMapping(value = "/entries",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+//    @Timed
+    public ResponseEntity<List<Entry>> getLastEntries() {
+        log.debug("REST request to get last entries");
+        return Optional.ofNullable((List<Entry>) entryRepository.findAll())
+            .map(feeds -> new ResponseEntity<>(
+                feeds,
+                HttpStatus.OK))
+            .orElse(new ResponseEntity<List<Entry>>(Collections.<Entry>emptyList(), HttpStatus.OK));
+    }
+
     @RequestMapping(value = "/feeds/{id}/entries",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)

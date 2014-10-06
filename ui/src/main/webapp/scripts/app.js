@@ -101,13 +101,23 @@ javaguruReaderApp
                         authorizedRoles: [USER_ROLES.admin]
                     }
                 })
+//                .otherwise({
+//                    templateUrl: 'views/entries.html',
+//                    controller: 'EntryController',
+//                    access: {
+//                        authorizedRoles: [USER_ROLES.all]
+//                    }
+//                });
                 .otherwise({
-                    templateUrl: 'views/main.html',
-                    controller: 'MainController',
-                    access: {
-                        authorizedRoles: [USER_ROLES.all]
-                    }
+                    redirectTo: '/entries'
                 });
+//                .otherwise({
+//                    templateUrl: 'views/main.html',
+//                    controller: 'MainController',
+//                    access: {
+//                        authorizedRoles: [USER_ROLES.all]
+//                    }
+//                });
 
             // Initialize angular-translate
             $translateProvider.useStaticFilesLoader({
