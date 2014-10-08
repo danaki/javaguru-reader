@@ -1,6 +1,7 @@
 package lv.javaguru.reader.fetcher;
 
 import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,18 +12,19 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
+import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.FileSystemUtils;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.ObjectMessage;
 import javax.jms.Session;
-import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
-
 
 @ComponentScan
 @Configuration
@@ -102,25 +104,50 @@ public class Fetcher implements CommandLineRunner {
 //		return factory;
 //	}
 
-    public static void main(String[] args) {
+    @JmsListener(destination = "fetcherInput")
+    @SendTo("fetcherOutput")
+    public FeedDataMessage processOrder(String msg) {
+        // order processing
+        System.out.println("pong");
+
+        try {
+            URL inputUrl = new URL(msg);
+
+            SyndFeedInput input = new SyndFeedInput();
+            SyndFeed feed = input.build(new XmlReader(inputUrl));
+            System.out.println("Sending data");
+
+            return new FeedDataMessage(msg, feed);
+        } catch (MalformedURLException e) {
+        } catch (IOException e) {
+        } catch (FeedException e) {
+        }
+
+        return null;
+    }
+
+    public static void main(String[] args) throws Exception {
         SpringApplication.run(Fetcher.class, args);
     }
 
     @Override
     public void run(String... args) throws Exception {
         // Clean out any ActiveMQ data from a previous run
-        FileSystemUtils.deleteRecursively(new File("activemq-data"));
+//        FileSystemUtils.deleteRecursively(new File("activemq-data"));
+//
+//        final SyndFeed feed;
+//
+//        String url = args[0];
+//        URL inputUrl = new URL(url);
+//
+//        SyndFeedInput input = new SyndFeedInput();
+//        feed = input.build(new XmlReader(inputUrl));
+//
+//        System.out.println("Sending a new message.");
+//        sendFeed(url, feed);
 
-        final SyndFeed feed;
-
-        String url = args[0];
-        URL inputUrl = new URL(url);
-
-        SyndFeedInput input = new SyndFeedInput();
-        feed = input.build(new XmlReader(inputUrl));
-
-        System.out.println("Sending a new message.");
-        sendFeed(url, feed);
+        FakeTask fakeTask = (FakeTask) context.getBean("receiver");
+        fakeTask.start();
 
 //        JmsTemplate jmsTemplate = context.getBean(JmsTemplate.class);
 

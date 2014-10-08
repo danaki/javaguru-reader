@@ -14,6 +14,11 @@
         <link rel="stylesheet" href="styles/386/bootstrap.css">
         <link rel="stylesheet" href="styles/386/bootstrap-responsive.css">
         <!--link rel="stylesheet" href="styles/main.css"-->
+        <style>
+          .container {
+            width: 100%;
+          }
+        </style>
         <!-- endbuild -->
     </head>
     <body ng-app="javaguruReaderApp">
@@ -31,9 +36,12 @@
                 <div class="nav-collapse collapse" id="navbar-collapse" ng-switch="authenticated">
                     <ul class="nav">
                         <li>
-                            <a href="#">Home</a>
+                            <a href="#/">Home</a>
                         </li>
-                        <li class="dropdown pointer">
+                        <li>
+                            <a href="#/feeds">Feeds</a>
+                        </li>
+                        <!--li class="dropdown pointer">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
                                 <span>
                                     <span class="hidden-tablet" translate="global.menu.account.main">
@@ -57,8 +65,8 @@
                                 <li ng-switch-when="false"><a href="#/register"></span>
                                     &#xA0;<span translate="global.menu.account.register">Register</span></a></li>
                             </ul>
-                        </li>
-                        <li ng-switch-when="true" ng-show="isAuthorized(userRoles.admin)" class="dropdown pointer" ng-controller="AdminController">
+                        </li-->
+                        <!--li ng-switch-when="true" ng-show="isAuthorized(userRoles.admin)" class="dropdown pointer" ng-controller="AdminController">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
                                 <span>
                                     <span class="glyphicon glyphicon-tower"></span>
@@ -76,8 +84,8 @@
                                 <li><a href="#/docs">
                                     &#xA0;<span translate="global.menu.account.apidocs">API Docs</span></a></li>
                             </ul>
-                        </li>
-                        <li class="dropdown pointer" ng-controller="LanguageController">
+                        </li-->
+                        <!--li class="dropdown pointer" ng-controller="LanguageController">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
                                 <span>
                                     <span class="hidden-tablet" translate="global.menu.language">Language</span>
@@ -89,7 +97,7 @@
                                     <a href="#" ng-click="changeLanguage(key)">{{language}}</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li-->
                     </ul>
                 </div>
             </div>

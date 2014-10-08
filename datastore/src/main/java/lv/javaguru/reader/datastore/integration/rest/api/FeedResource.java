@@ -10,8 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.web.bind.annotation.*;
 
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.ObjectMessage;
+import javax.jms.Session;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -25,11 +31,11 @@ public class FeedResource {
     private final Logger log = LoggerFactory.getLogger(FeedResource.class);
 
     @Autowired
+    JmsTemplate jmsTemplate;
+
+    @Autowired
     private FeedRepository feedRepository;
 
-    /**
-     * POST  /rest/feeds -> Create a new feed.
-     */
     @RequestMapping(value = "/feeds",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -39,9 +45,6 @@ public class FeedResource {
         feedRepository.save(feed);
     }
 
-    /**
-     * GET  /rest/feeds -> get all the feeds.
-     */
     @RequestMapping(value = "/feeds",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -55,9 +58,6 @@ public class FeedResource {
             .orElse(new ResponseEntity<List<Feed>>(Collections.<Feed>emptyList(), HttpStatus.OK));
     }
 
-    /**
-     * GET  /rest/feeds/:id -> get the "id" feed.
-     */
     @RequestMapping(value = "/feeds/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -71,9 +71,31 @@ public class FeedResource {
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    /**
-     * DELETE  /rest/feeds/:id -> delete the "id" feed.
-     */
+    @RequestMapping(value = "/feeds/{id}",
+            method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+//    @Timed
+    public ResponseEntity<Feed> refresh(@PathVariable Long id) {
+        log.debug("REST request to refresh Feed : {}", id);
+        Feed feed = feedRepository.findOne(id);
+        if (feed == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        MessageCreator messageCreator = new MessageCreator() {
+            @Override
+            public Message createMessage(Session session) throws JMSException {
+                ObjectMessage msg = session.createObjectMessage();
+                msg.setObject(feed.getUrl());
+                return msg;
+            }
+        };
+
+        jmsTemplate.send("fetcherInput", messageCreator);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/feeds/{id}",
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)

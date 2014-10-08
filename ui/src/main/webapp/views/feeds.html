@@ -67,6 +67,11 @@
                     <td>{{feed.entriesUpdatedAt}}</td>
                     <td>
                         <button type="submit"
+                                ng-click="refresh(feed.id)"
+                                class="btn">
+                            {{buttonText || 'Refresh'}}
+                        </button>
+                        <button type="submit"
                                 ng-click="goDetails(feed.id)"
                                 class="btn">
                             Entries

@@ -23,7 +23,7 @@ public class JmsMessageListener {
     @Autowired
     private EntryRepository entryRepository;
 
-    @JmsListener(destination = "myQueue")
+    @JmsListener(destination = "fetcherOutput")
     public void processOrder(FeedDataMessage message) {
         logger.info("Received parsed feed message {} {}", message.getUrl(), message.getTitle());
 

@@ -8,6 +8,11 @@ javaguruReaderApp.controller('FeedsController', function ($scope, $location, res
         $location.path('/feed/' + id);
     };
 
+    $scope.refresh = function (id) {
+        $scope.buttonText = 'Refreshing...';
+        Feed.refresh({id: id});
+    };
+
     $scope.create = function () {
         Feed.save($scope.feed,
             function () {
