@@ -23,7 +23,7 @@ public class FeedDataMessage implements Serializable {
 
         while (iter.hasNext()) {
             SyndEntry entry = (SyndEntry) iter.next();
-            entries.add(new FeedDataMessageEntry(entry.getUri(), entry.getTitle()));
+            entries.add(new FeedDataMessageEntry(entry.getUri(), entry.getTitle(), entry.getPublishedDate()));
         }
     }
 

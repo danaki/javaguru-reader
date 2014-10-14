@@ -3,8 +3,23 @@
 /* App Module */
 var httpHeaders;
 
-var javaguruReaderApp = angular.module('javaguruReaderApp', ['http-auth-interceptor', 'tmh.dynamicLocale',
-    'ngResource', 'ngRoute', 'ngCookies', 'javaguruReaderAppUtils', 'pascalprecht.translate', 'truncate']);
+var javaguruReaderApp = angular.module('javaguruReaderApp', [
+    'http-auth-interceptor',
+    'tmh.dynamicLocale',
+    'ngResource',
+    'ngRoute',
+    'ngCookies',
+    'javaguruReaderAppUtils',
+    'pascalprecht.translate',
+    'truncate',
+    'mgcrea.ngStrap'
+]);
+
+javaguruReaderApp.filter('fromNow', function() {
+    return function(date) {
+        return moment(date).fromNow();
+    }
+});
 
 javaguruReaderApp
     .config(function ($routeProvider, $httpProvider, $translateProvider, tmhDynamicLocaleProvider, USER_ROLES) {

@@ -8,14 +8,19 @@ package lv.javaguru.reader.datastore.domain;
 //import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.joda.deser.LocalDateTimeDeserializer;
 import com.voodoodyne.jackson.jsog.JSOGGenerator;
+import lv.javaguru.reader.datastore.domain.util.CustomLocalDateTimeSerializer;
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDateTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-
 //import org.joda.time.LocalDate;
 
 /**
@@ -33,11 +38,11 @@ public class Feed implements Serializable {
     private Long id;
 
     @Size(min = 1, max = 255)
-    @Column(name = "url", length = 255)
+    @Column(name = "url", length = 255, nullable = false)
     private String url;
 
     @Size(min = 1, max = 255)
-    @Column(name = "title", length = 255)
+    @Column(name = "title", length = 255, nullable = false)
     private String title;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -52,11 +57,11 @@ public class Feed implements Serializable {
         this.title = title;
     }
 
-//    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-//    @JsonDeserialize(using = LocalDateDeserializer.class)
-//    @JsonSerialize(using = CustomLocalDateSerializer.class)
-//    @Column(name = "entries_updated_at", nullable = false)
-//    private LocalDate entriesUpdatedAt;
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
+    @Column(name = "entries_updated_at")
+    private LocalDateTime entriesUpdatedAt;
 
     public Long getId() {
         return id;
@@ -90,13 +95,13 @@ public class Feed implements Serializable {
         this.entries = entries;
     }
 
-//    public LocalDate getEntriesUpdatedAt() {
-//        return entriesUpdatedAt;
-//    }
-//
-//    public void setEntriesUpdatedAt(LocalDate entriesUpdatedAt) {
-//        this.entriesUpdatedAt = entriesUpdatedAt;
-//    }
+    public LocalDateTime getEntriesUpdatedAt() {
+        return entriesUpdatedAt;
+    }
+
+    public void setEntriesUpdatedAt(LocalDateTime entriesUpdatedAt) {
+        this.entriesUpdatedAt = entriesUpdatedAt;
+    }
 
     @Override
     public boolean equals(Object o) {

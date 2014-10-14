@@ -1,9 +1,16 @@
 package lv.javaguru.reader.datastore.domain;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.joda.deser.LocalDateTimeDeserializer;
 import com.voodoodyne.jackson.jsog.JSOGGenerator;
+import lv.javaguru.reader.datastore.domain.util.CustomLocalDateTimeSerializer;
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDateTime;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -27,20 +34,22 @@ public class Entry implements Serializable {
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
 
+    @NotNull
     @Size(min = 1, max = 255)
-    @Column(name = "url", length = 255)
+    @Column(name = "url", length = 255, nullable = false)
     private String url;
 
+    @NotNull
     @Size(min = 1, max = 255)
-    @Column(name = "title", length = 255)
+    @Column(name = "title", length = 255, nullable = false)
     private String title;
 
-//    @NotNull
-//    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-//    @JsonDeserialize(using = LocalDateDeserializer.class)
-//    @JsonSerialize(using = CustomLocalDateSerializer.class)
-//    @Column(name = "created_at", nullable = false)
-//    private LocalDate createdAt;
+    @NotNull
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime publishedAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "feed_id", nullable = false)
@@ -79,13 +88,13 @@ public class Entry implements Serializable {
         this.title = title;
     }
 
-//    public LocalDate getCreatedAt() {
-//        return createdAt;
-//    }
+    public LocalDateTime getPublishedAt() {
+        return publishedAt;
+    }
 
-//    public void setCreatedAt(LocalDate createdAt) {
-//        this.createdAt = createdAt;
-//    }
+    public void setPublishedAt(LocalDateTime publishedAt) {
+        this.publishedAt = publishedAt;
+    }
 
     public Feed getFeed() { return feed; }
 
@@ -120,7 +129,7 @@ public class Entry implements Serializable {
                 "id=" + id +
                 ", url='" + url + '\'' +
                 ", title='" + title + '\'' +
-//                ", createdAt=" + createdAt +
+//                ", publishedAt=" + publishedAt +
                 '}';
     }
 }

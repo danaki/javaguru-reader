@@ -1,23 +1,11 @@
-<div>
+<div id="entries">
     <p class="lead">Entries</p>
 
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>URL</th>
-                    <th>Title</th>
-                    <th>Created At</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="entry in entries">
-                    <td><a href="#/feeds/{{entry.feed.id}}">{{entry.feed.title}}</td>
-                    <td><a href="{{entry.url}}">{{entry.title}}</a></td>
-                    <td>{{entry.createdAt}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <ul>
+        <li ng-repeat="entry in entries">
+          <a href="{{entry.url}}">{{entry.title}}</a>
+          <a href="#/feeds/{{entry.feed.id}}" class="feed-title">{{entry.feed.title}}</a>
+          {{entry.publishedAt | fromNow}}
+        </li>
+    </ul>
 </div>

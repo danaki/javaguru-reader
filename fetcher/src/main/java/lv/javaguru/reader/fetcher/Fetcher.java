@@ -132,27 +132,23 @@ public class Fetcher implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Clean out any ActiveMQ data from a previous run
-//        FileSystemUtils.deleteRecursively(new File("activemq-data"));
-//
-//        final SyndFeed feed;
-//
-//        String url = args[0];
-//        URL inputUrl = new URL(url);
-//
-//        SyndFeedInput input = new SyndFeedInput();
-//        feed = input.build(new XmlReader(inputUrl));
-//
-//        System.out.println("Sending a new message.");
-//        sendFeed(url, feed);
+        if (args.length == 0) {
+            FakeTask fakeTask = (FakeTask) context.getBean(FakeTask.class);
+            fakeTask.start();
 
-        FakeTask fakeTask = (FakeTask) context.getBean("receiver");
-        fakeTask.start();
-
+        } else {
+            final SyndFeed feed;
 //        JmsTemplate jmsTemplate = context.getBean(JmsTemplate.class);
 
 //        jmsTemplate.setDefaultDestinationName("myQueue");
+            String url = args[0];
+            URL inputUrl = new URL(url);
 
+            SyndFeedInput input = new SyndFeedInput();
+            feed = input.build(new XmlReader(inputUrl));
+
+            sendFeed(url, feed);
+        }
     }
 
     private void sendFeed(String url, final SyndFeed feed)
@@ -166,6 +162,6 @@ public class Fetcher implements CommandLineRunner {
             }
         };
 
-        jmsTemplate.send("myQueue", messageCreator);
+        jmsTemplate.send("fetcherOutput", messageCreator);
     }
 }

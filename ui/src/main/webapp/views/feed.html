@@ -18,7 +18,7 @@
                 <tr ng-repeat="entry in feed.entries">
                     <td><a href="#/feeds/{{entry.feed.id}}">{{entry.feed.title}}</td>
                     <td><a href="{{entry.url}}">{{entry.title}}</a></td>
-                    <td>{{entry.createdAt}}</td>
+                    <td>{{entry.publishedAt}}</td>
                 </tr>
             </tbody>
         </table>

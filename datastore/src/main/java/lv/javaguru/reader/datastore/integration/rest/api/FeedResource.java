@@ -42,6 +42,7 @@ public class FeedResource {
 //    @Timed
     public void create(@RequestBody Feed feed) {
         log.debug("REST request to save Feed : {}", feed);
+        feed.setTitle("[UPDATE IN PROGRESS]");
         feedRepository.save(feed);
     }
 
